@@ -8,11 +8,11 @@ const joi = require('joi')
  * @param {String} label The label to use in the error message.
  * @param {JoiSchema} schema The Joi schema to validate the object against.
  */
-function validateObject (object, label, schema) {
+function validateObject (object = {}, label, schema, options) {
   // Skip validation if no schema is provided
   if (schema) {
     // Validate the object against the provided schema
-    const { error, value } = joi.validate(object, schema)
+    const { error, value } = joi.validate(object, schema, options)
     if (error) {
       // Throw error with custom message if validation failed
       throw new Error(`Invalid ${label} - ${error.message}`)
@@ -36,7 +36,7 @@ function validateRequest (validationObj) {
   return (ctx, next) => {
     try {
       // Validate each request data object in the Koa context object
-      validateObject(ctx.headers, 'Headers', validationObj.headers)
+      validateObject(ctx.headers, 'Headers', validationObj.headers, { allowUnknown: true })
       validateObject(ctx.params, 'URL Parameters', validationObj.params)
       validateObject(ctx.query, 'URL Query', validationObj.query)
       validateObject(ctx.body, 'Request Body', validationObj.body)
