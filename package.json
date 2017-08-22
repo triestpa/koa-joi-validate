@@ -1,0 +1,12 @@
+{
+  "name": "koa-joi-validation-middleware",
+  "version": "0.0.1",
+  "description": "Minimal module to generate request validation middleware for Koa using Joi.",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "joi": "10.6.0"
+  }
+}
