@@ -1,27 +1,48 @@
 const joi = require('joi')
 
-function validate (input, label, schema) {
-  // Return function that validates a provided Koa context object.
-  return (ctx) => {
-    if (schema) { // Skip validation if no schema is provided
-      const { error, value } = joi.validate(input, schema)
-      if (error) {
-        // Throw error if validation failed
-        throw new Error(`Invalid ${label} - ${error.message}`)
-      }
+/**
+ * Helper function to validate an object against the provided schema,
+ * and to throw a custom error if object is not valid.
+ *
+ * @param {Object} object The object to be validated.
+ * @param {String} label The label to use in the error message.
+ * @param {JoiSchema} schema The Joi schema to validate the object against.
+ */
+function validateObject (object, label, schema) {
+  // Skip validation if no schema is provided
+  if (schema) {
+    // Validate the object against the provided schema
+    const { error, value } = joi.validate(object, schema)
+    if (error) {
+      // Throw error with custom message if validation failed
+      throw new Error(`Invalid ${label} - ${error.message}`)
     }
   }
 }
 
+/**
+ * Generate a Koa middleware function to validate a request using
+ * the provided validation objects.
+ *
+ * @param {Object} validationObj
+ * @param {Object} validationObj.headers The request headers schema
+ * @param {Object} validationObj.params The request params schema
+ * @param {Object} validationObj.query The request query schema
+ * @param {Object} validationObj.body The request body schema
+ * @returns A validation middleware function.
+ */
 function validateRequest (validationObj) {
+  // Return a Koa middleware function
   return (ctx, next) => {
     try {
-      validate(ctx.query, 'Headers', validationObj.headers)
-      validate(ctx.params, 'URL Parameters', validationObj.params)
-      validate(ctx.query, 'URL Query', validationObj.query)
-      validate(ctx.body, 'Request Body', validationObj.body)
+      // Validate each request data object in the Koa context object
+      validateObject(ctx.headers, 'Headers', validationObj.headers)
+      validateObject(ctx.params, 'URL Parameters', validationObj.params)
+      validateObject(ctx.query, 'URL Query', validationObj.query)
+      validateObject(ctx.body, 'Request Body', validationObj.body)
       return next()
     } catch (err) {
+      // If any of the objects fails validation, send an HTTP 400 response.
       ctx.throw(400, err.message)
     }
   }
