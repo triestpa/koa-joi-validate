@@ -39,7 +39,11 @@ function validateRequest (validationObj) {
       validateObject(ctx.headers, 'Headers', validationObj.headers, { allowUnknown: true })
       validateObject(ctx.params, 'URL Parameters', validationObj.params)
       validateObject(ctx.query, 'URL Query', validationObj.query)
-      validateObject(ctx.body, 'Request Body', validationObj.body)
+
+      if (ctx.request.body) {
+        validateObject(ctx.request.body, 'Request Body', validationObj.body)
+      }
+
       return next()
     } catch (err) {
       // If any of the objects fails validation, send an HTTP 400 response.
