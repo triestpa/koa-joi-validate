@@ -6,19 +6,25 @@ Calling the module allows you to easily generate [Koa](https://github.com/koajs/
 
 ### Install
 
-```
+```bash
 npm install koa-joi-validate
 ```
 
 ### Import
 
+```javascript
+const validate = require('koa-joi-validate')
 ```
-const OTP = require('koa-joi-validate')
+
+or
+
+```javascript
+import validate from 'koa-joi-validate'
 ```
 
 ### Usage
 
-To use the module, call `validate` with an object containing Joi validation objects for the requestion headers, URL query, URL params, and post body.
+To use the module, call `validate` with an object containing Joi validation objects for the request headers, URL query, URL path params, and post body.
 
 The following basic example will verify that any request to the server contains a properly formatted request ID header and user ID url query parameter.
 ```javascript

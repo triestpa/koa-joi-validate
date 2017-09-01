@@ -31,7 +31,7 @@ function validateObject (object = {}, label, schema, options) {
  * @param {Object} validationObj.body The request body schema
  * @returns A validation middleware function.
  */
-function validateRequest (validationObj) {
+function validate (validationObj) {
   // Return a Koa middleware function
   return (ctx, next) => {
     try {
@@ -52,4 +52,4 @@ function validateRequest (validationObj) {
   }
 }
 
-module.exports = validateRequest
+module.exports = validate
