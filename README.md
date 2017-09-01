@@ -2,10 +2,7 @@
 
 A tiny module to provide Joi validation middleware within a Koa server.
 
-Calling the module allows you to easily generate [Koa]https://github.com/koajs/koa) middleware to validate incoming requests using [Joi](https://github.com/hapijs/joi).
-
-> This module is in mid-development, I built it in order to allow utility class from another in-development app to be reusable across different projects.  I don't really recommend using it in your projects yet, since it has not yet been fully tested.  It will likely be ready within a few weeks.
-
+Calling the module allows you to easily generate [Koa](https://github.com/koajs/koa) middleware to validate incoming requests using [Joi](https://github.com/hapijs/joi).
 
 ### Install
 

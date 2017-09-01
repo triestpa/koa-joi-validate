@@ -1,6 +1,6 @@
 {
   "name": "koa-joi-validate",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Tiny module to generate request validation middleware for Koa using Joi.",
   "main": "index.js",
   "scripts": {},
