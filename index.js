@@ -31,17 +31,17 @@ function validateObject (object = {}, label, schema, options) {
  * @param {Object} validationObj.body The request body schema
  * @returns A validation middleware function.
  */
-function validate (validationObj) {
+function validate (validationObj, opts) {
   // Return a Koa middleware function
   return (ctx, next) => {
     try {
       // Validate each request data object in the Koa context object
       validateObject(ctx.headers, 'Headers', validationObj.headers, { allowUnknown: true })
-      validateObject(ctx.params, 'URL Parameters', validationObj.params)
-      validateObject(ctx.query, 'URL Query', validationObj.query)
+      validateObject(ctx.params, 'URL Parameters', validationObj.params, opts || null)
+      validateObject(ctx.query, 'URL Query', validationObj.query, opts || null)
 
       if (ctx.request.body) {
-        validateObject(ctx.request.body, 'Request Body', validationObj.body)
+        validateObject(ctx.request.body, 'Request Body', validationObj.body, opts || null)
       }
 
       return next()
